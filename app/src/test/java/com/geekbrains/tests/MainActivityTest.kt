@@ -17,8 +17,6 @@ import com.geekbrains.tests.view.details.DetailsActivity
 import com.geekbrains.tests.view.search.MainActivity
 import com.geekbrains.tests.view.search.SearchResultAdapter
 import com.google.common.truth.Truth.assertThat
-import com.nhaarman.mockito_kotlin.times
-import com.nhaarman.mockito_kotlin.verify
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
 import junit.framework.TestCase.assertTrue
@@ -26,25 +24,27 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.mockito.Mockito
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.times
+import org.mockito.Mockito.verify
 import org.robolectric.annotation.Config
 import org.robolectric.shadows.ShadowToast
 
 @RunWith(AndroidJUnit4::class)
-@Config(sdk = [Build.VERSION_CODES.O_MR1])
+@Config(sdk = [Build.VERSION_CODES.N_MR1])
 class MainActivityTest {
 
-    private lateinit var scenario: ActivityScenario<MainActivity>
+
+
+ private lateinit var scenario: ActivityScenario<MainActivity>
     private lateinit var context: Context
     private lateinit var progressBarView: ProgressBar
     private lateinit var editTextView: EditText
     private lateinit var buttonView: Button
     private lateinit var recyclerView: RecyclerView
-
     @Before
     fun setup() {
-        scenario = ActivityScenario.launch(MainActivity::class.java)
+      scenario = ActivityScenario.launch(MainActivity::class.java)
         context = ApplicationProvider.getApplicationContext()
         scenario.onActivity {
             progressBarView = it.findViewById(R.id.progressBar)
@@ -103,7 +103,6 @@ class MainActivityTest {
 
     @Test
     fun activityButtonToDetailsActivity_IsWorking() {
-
         scenario.onActivity {
             it.setUI()
             buttonView.performClick()
