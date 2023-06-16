@@ -31,7 +31,7 @@ class SearchPresenterTest {
         MockitoAnnotations.initMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
         presenter = SearchPresenter(repository).apply {
-            viewContract=this@SearchPresenterTest.viewContract
+            viewContract = this@SearchPresenterTest.viewContract
         }
     }
 
@@ -76,8 +76,7 @@ class SearchPresenterTest {
         presenter.handleGitHubResponse(response)
 
         //Убеждаемся, что вызывается верный метод: viewContract.displayError("Response is null or unsuccessful"), и что он вызывается единожды
-        verify(viewContract, times(1))
-            .displayError("Response is null or unsuccessful")
+        verify(viewContract, times(1)).displayError("Response is null or unsuccessful")
     }
 
     @Test //Проверим порядок вызова методов viewContract
@@ -125,8 +124,7 @@ class SearchPresenterTest {
         presenter.handleGitHubResponse(response)
 
         //Убеждаемся, что вызывается верный метод: viewContract.displayError("Search results or total count are null"), и что он вызывается единожды
-        verify(viewContract, times(1))
-            .displayError("Search results or total count are null")
+        verify(viewContract, times(1)).displayError("Search results or total count are null")
     }
 
     @Test //Пришло время проверить успешный ответ, так как все остальные случаи мы уже покрыли тестами
@@ -154,13 +152,14 @@ class SearchPresenterTest {
 
     @Test
     fun onAttach() {
-        presenter.viewContract=null
+        presenter.viewContract = null
         presenter.onAttach(viewContract)
-   assertNotNull(presenter.viewContract)
+        assertNotNull(presenter.viewContract)
     }
+
     @Test
     fun onDetach() {
-        presenter.viewContract=viewContract
+        presenter.viewContract = viewContract
         presenter.onDetach()
         assertNull(presenter.viewContract)
     }

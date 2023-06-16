@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     private val binding
         get() = _binding!!
 
-    private val adapter = SearchResultAdapter()
+    val adapter = SearchResultAdapter()
     private val presenter: PresenterSearchContract = SearchPresenter(createRepository())
     var totalCount: Int = 0
 
@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         binding.recyclerView.adapter = adapter
     }
 
-    private fun setQueryListener() {
+    fun setQueryListener() {
         binding.searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = binding.searchEditText.text.toString()
