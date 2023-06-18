@@ -15,10 +15,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.geekbrains.tests.model.SearchResult
 import com.geekbrains.tests.view.details.DetailsActivity
 import com.geekbrains.tests.view.search.MainActivity
-import com.geekbrains.tests.view.search.SearchResultAdapter
 import com.google.common.truth.Truth.assertThat
 import junit.framework.TestCase.assertEquals
 import junit.framework.TestCase.assertNotNull
+import junit.framework.TestCase.assertSame
 import junit.framework.TestCase.assertTrue
 import org.junit.After
 import org.junit.Before
@@ -35,16 +35,21 @@ import org.robolectric.shadows.ShadowToast
 class MainActivityTest {
 
 
-
- private lateinit var scenario: ActivityScenario<MainActivity>
+    private lateinit var scenario: ActivityScenario<MainActivity>
+    private lateinit var mainActivityScenario: ActivityScenario<MainActivity>
     private lateinit var context: Context
     private lateinit var progressBarView: ProgressBar
     private lateinit var editTextView: EditText
     private lateinit var buttonView: Button
     private lateinit var recyclerView: RecyclerView
+
     @Before
     fun setup() {
-      scenario = ActivityScenario.launch(MainActivity::class.java)
+
+       mainActivityScenario = ActivityScenario
+           .launch(MainActivity::class.java)
+
+        scenario = mock(mainActivityScenario::class.java)
         context = ApplicationProvider.getApplicationContext()
         scenario.onActivity {
             progressBarView = it.findViewById(R.id.progressBar)
@@ -56,14 +61,14 @@ class MainActivityTest {
 
     @Test
     fun activity_AssertNotNull() {
-        scenario.onActivity {
+        mainActivityScenario.onActivity {
             assertNotNull(it)
         }
     }
 
     @Test
     fun activity_IsResumed() {
-        assertEquals(Lifecycle.State.RESUMED, scenario.state)
+        assertEquals(Lifecycle.State.RESUMED, mainActivityScenario.state)
     }
 
     @Test
@@ -106,9 +111,8 @@ class MainActivityTest {
         scenario.onActivity {
             it.setUI()
             buttonView.performClick()
-            val mainActivity = mock(it::class.java)
-            verify(mainActivity, times(1))
-                .startActivity(DetailsActivity.getIntent(context, it.totalCount))
+            verify(it, times(1))
+               .startActivity(DetailsActivity.getIntent(context, it.totalCount))
         }
     }
 
@@ -117,7 +121,7 @@ class MainActivityTest {
         scenario.onActivity {
             it.setRecyclerView()
             assertTrue(recyclerView.hasFixedSize())
-            assertEquals(recyclerView.adapter, SearchResultAdapter())
+            assertSame(recyclerView.adapter, it.adapter)
         }
     }
 
