@@ -9,7 +9,6 @@ plugins {
 android {
     namespace 'com.geekbrains.tests'
     compileSdk 33
-    //  buildToolsVersions "30.0.2"
 
     defaultConfig {
         applicationId "com.geekbrains.tests"
