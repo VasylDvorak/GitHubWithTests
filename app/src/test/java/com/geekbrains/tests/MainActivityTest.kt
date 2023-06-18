@@ -61,7 +61,7 @@ class MainActivityTest {
 
     @Test
     fun activity_AssertNotNull() {
-        scenario.onActivity {
+        mainActivityScenario.onActivity {
             assertNotNull(it)
         }
     }

@@ -30,8 +30,9 @@ class SearchPresenterTest {
         //Раньше было @RunWith(MockitoJUnitRunner.class) в аннотации к самому классу (SearchPresenterTest)
         MockitoAnnotations.initMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
-        presenter = SearchPresenter(repository).apply {
+        presenter = SearchPresenter().apply {
             viewContract = this@SearchPresenterTest.viewContract
+            repository = this@SearchPresenterTest.repository
         }
     }
 
