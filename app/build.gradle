@@ -1,12 +1,15 @@
 plugins {
     id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+    id 'kotlin-kapt'
     id 'kotlin-android'
 }
 
 android {
     namespace 'com.geekbrains.tests'
     compileSdk 33
-  //  buildToolsVersions "30.0.2"
+    //  buildToolsVersions "30.0.2"
 
     defaultConfig {
         applicationId "com.geekbrains.tests"
@@ -37,15 +40,22 @@ android {
         unitTests {
             includeAndroidResources = true
         }
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
+
     buildFeatures {
         viewBinding = true
     }
-
-}
-repositories {
-    jcenter()
+    flavorDimensions 'version'
+    productFlavors {
+        fake {
+            dimension 'version'
+            versionNameSuffix '.fake'
+        }
+        real {
+            dimension 'version'
+            versionNameSuffix '.real'
+        }
+    }
 }
 
 dependencies {
@@ -74,4 +84,10 @@ dependencies {
     testImplementation 'androidx.test:runner:1.5.2'
     testImplementation 'androidx.test.ext:junit:1.1.5'
     testImplementation 'androidx.test.ext:truth:1.5.0'
+
+    //Dagger
+    implementation 'com.google.dagger:dagger:2.46.1'
+    kapt 'com.google.dagger:dagger-compiler:2.46.1'
+    kapt 'com.google.dagger:dagger-android-processor:2.46.1'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.46.1'
 }
