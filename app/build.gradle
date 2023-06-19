@@ -12,7 +12,7 @@ android {
 
     defaultConfig {
         applicationId "com.geekbrains.tests"
-        minSdkVersion 24
+        minSdkVersion 18
         targetSdkVersion 33
         versionCode 1
         versionName "1.0"
@@ -89,4 +89,8 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.46.1'
     kapt 'com.google.dagger:dagger-android-processor:2.46.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.46.1'
+
+    //UI Automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
 }
