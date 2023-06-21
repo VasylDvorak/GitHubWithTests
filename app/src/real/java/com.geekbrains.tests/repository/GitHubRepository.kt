@@ -2,16 +2,16 @@ package com.geekbrains.tests.repository
 
 import com.geekbrains.tests.model.SearchResponse
 import com.geekbrains.tests.presenter.RepositoryContract
-import com.geekbrains.tests.view.search.MainActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Inject
 
-class GitHubRepository(): RepositoryContract {
+class GitHubRepository @Inject constructor(): RepositoryContract {
 
-private val gitHubApi = Retrofit().createRetrofit()
+    @Inject
+    lateinit var gitHubApi: GitHubApi
+
     override fun searchGithub(
         query: String,
         callback: RepositoryCallback
