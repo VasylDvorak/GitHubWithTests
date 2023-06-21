@@ -54,24 +54,39 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         binding.recyclerView.adapter = adapter
     }
 
+//    fun setQueryListener() {
+//        binding.searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
+//            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+//                val query = binding.searchEditText.text.toString()
+//                if (query.isNotBlank()) {
+//                    presenter.searchGitHub(query)
+//                    return@OnEditorActionListener true
+//                } else {
+//                    Toast.makeText(
+//                        this@MainActivity,
+//                        getString(R.string.enter_search_word),
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//                    return@OnEditorActionListener false
+//                }
+//            }
+//            false
+//        })
+//    }
+
     fun setQueryListener() {
-        binding.searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+binding.searchButton.setOnClickListener {
                 val query = binding.searchEditText.text.toString()
                 if (query.isNotBlank()) {
                     presenter.searchGitHub(query)
-                    return@OnEditorActionListener true
                 } else {
                     Toast.makeText(
                         this@MainActivity,
                         getString(R.string.enter_search_word),
                         Toast.LENGTH_SHORT
                     ).show()
-                    return@OnEditorActionListener false
                 }
-            }
-            false
-        })
+    }
     }
 
 

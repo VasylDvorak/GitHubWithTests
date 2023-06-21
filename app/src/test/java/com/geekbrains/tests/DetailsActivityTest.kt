@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowToast
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
@@ -29,6 +30,7 @@ class DetailsActivityTest {
     fun setup() {
         scenario = ActivityScenario.launch(DetailsActivity::class.java)
         context = ApplicationProvider.getApplicationContext()
+
     }
 
     @Test

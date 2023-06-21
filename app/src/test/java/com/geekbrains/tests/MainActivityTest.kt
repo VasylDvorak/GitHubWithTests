@@ -170,6 +170,7 @@ class MainActivityTest {
         }
     }
 
+
     @After
     fun close() {
         scenario.close()
