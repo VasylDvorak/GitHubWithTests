@@ -3,14 +3,7 @@ package com.geekbrains.tests.automator
 
 import android.content.Context
 import android.content.Intent
-import android.view.KeyEvent
-import android.widget.TextView
-import android.widget.Toast
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.Espresso.onView
-import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SdkSuppress
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
@@ -20,13 +13,11 @@ import androidx.test.uiautomator.UiObject
 import androidx.test.uiautomator.UiObject2
 import androidx.test.uiautomator.UiSelector
 import androidx.test.uiautomator.Until
-import com.geekbrains.tests.MainActivityEspressoTest
 import com.geekbrains.tests.R
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import org.robolectric.shadows.ShadowToast
 
 
 @RunWith(AndroidJUnit4::class)
