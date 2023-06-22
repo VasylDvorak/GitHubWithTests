@@ -3,6 +3,7 @@ package com.geekbrains.tests.automator
 
 import android.content.Context
 import android.content.Intent
+import android.view.KeyEvent
 import android.widget.TextView
 import android.widget.Toast
 import androidx.test.core.app.ApplicationProvider
@@ -58,9 +59,14 @@ class BehaviorTest {
     fun test_SearchIsPositive() {
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
         editText.text = "UiAutomator"
+
         val searchButton: UiObject =
             uiDevice.findObject(UiSelector().description(context.getString(R.string.Search)))
         searchButton.click()
+
+//        editText.click()
+//        uiDevice.pressKeyCode(KeyEvent.KEYCODE_SEARCH)
+
         val changedText =
             uiDevice.wait(
                 Until.findObject(By.res(packageName, "totalCountTextViewMainActivity")),

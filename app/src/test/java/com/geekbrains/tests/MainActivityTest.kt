@@ -79,6 +79,8 @@ class MainActivityTest {
             assertNotNull(buttonView)
             assertNotNull(recyclerView)
         }
+        assertThat(ShadowToast.getTextOfLatestToast()).isEqualTo(( "Ваш текст "))
+
     }
 
 
