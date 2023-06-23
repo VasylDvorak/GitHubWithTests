@@ -2,6 +2,7 @@ package com.geekbrains.tests
 
 import com.geekbrains.tests.model.SearchResponse
 import com.geekbrains.tests.model.SearchResult
+import com.geekbrains.tests.presenter.RepositoryContract
 import com.geekbrains.tests.presenter.search.SearchPresenter
 import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.view.search.ViewSearchContract
@@ -19,7 +20,7 @@ class SearchPresenterTest {
     private lateinit var presenter: SearchPresenter
 
     @Mock
-    private lateinit var repository: GitHubRepository
+    private lateinit var bindRepositoryContract: RepositoryContract
 
     @Mock
     private lateinit var viewContract: ViewSearchContract
@@ -32,7 +33,7 @@ class SearchPresenterTest {
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
         presenter = SearchPresenter().apply {
             viewContract = this@SearchPresenterTest.viewContract
-            repository = this@SearchPresenterTest.repository
+            bindRepositoryContract = this@SearchPresenterTest.bindRepositoryContract
         }
     }
 
@@ -42,7 +43,7 @@ class SearchPresenterTest {
         //Запускаем код, функционал которого хотим протестировать
         presenter.searchGitHub("some query")
         //Убеждаемся, что все работает как надо
-        verify(repository, times(1)).searchGithub(searchQuery, presenter)
+        verify(bindRepositoryContract, times(1)).searchGithub(searchQuery, presenter)
     }
 
     @Test //Проверяем работу метода handleGitHubError()
@@ -77,7 +78,7 @@ class SearchPresenterTest {
         presenter.handleGitHubResponse(response)
 
         //Убеждаемся, что вызывается верный метод: viewContract.displayError("Response is null or unsuccessful"), и что он вызывается единожды
-        verify(viewContract, times(1)).displayError("Response is null or unsuccessful")
+        verify(viewContract, times(1)).displayError(responseNull)
     }
 
     @Test //Проверим порядок вызова методов viewContract
@@ -90,7 +91,7 @@ class SearchPresenterTest {
         val inOrder = inOrder(viewContract)
         //Прописываем порядок вызова методов
         inOrder.verify(viewContract).displayLoading(false)
-        inOrder.verify(viewContract).displayError("Response is null or unsuccessful")
+        inOrder.verify(viewContract).displayError(responseNull)
     }
 
     @Test //Проверим пустой ответ сервера
