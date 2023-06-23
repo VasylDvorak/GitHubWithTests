@@ -1,10 +1,11 @@
 package com.geekbrains.tests.presenter.search
 
 import com.geekbrains.tests.model.SearchResponse
-import com.geekbrains.tests.repository.GitHubRepository
-import com.geekbrains.tests.repository.GitHubRepository.GitHubRepositoryCallback
+import com.geekbrains.tests.presenter.RepositoryContract
+import com.geekbrains.tests.repository.RepositoryCallback
 import com.geekbrains.tests.view.search.ViewSearchContract
 import retrofit2.Response
+import javax.inject.Inject
 
 /**
  * В архитектуре MVP все запросы на получение данных адресуются в Репозиторий.
@@ -14,9 +15,10 @@ import retrofit2.Response
  * выступая в роли регулировщика движения на перекрестке.
  */
 
-internal class SearchPresenter internal constructor(
-    private val repository: GitHubRepository
-) : PresenterSearchContract, GitHubRepositoryCallback {
+class SearchPresenter internal constructor(
+) : PresenterSearchContract, RepositoryCallback {
+    @Inject
+    lateinit var repository: RepositoryContract
 
     var viewContract: ViewSearchContract? = null
 
@@ -28,6 +30,7 @@ internal class SearchPresenter internal constructor(
     override fun onAttach(viewContract: ViewSearchContract) {
         this.viewContract = viewContract
     }
+
     override fun onDetach() {
         viewContract = null
     }
