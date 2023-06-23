@@ -6,17 +6,16 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.R
 import com.geekbrains.tests.databinding.ActivityDetailsBinding
-import com.geekbrains.tests.databinding.ActivityMainBinding
 import com.geekbrains.tests.presenter.details.DetailsPresenter
 import com.geekbrains.tests.presenter.details.PresenterDetailsContract
 import java.util.*
 
 class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
+
+    private val presenter: PresenterDetailsContract = DetailsPresenter()
     private var _binding: ActivityDetailsBinding? = null
     private val binding
         get() = _binding!!
-    private val presenter: PresenterDetailsContract = DetailsPresenter()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding= ActivityDetailsBinding.inflate(layoutInflater)
@@ -24,11 +23,7 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
         presenter.onAttach(this)
         setUI()
     }
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-        presenter.onDetach()
-    }
+
     private fun setUI() {
         val count = intent.getIntExtra(TOTAL_COUNT_EXTRA, 0)
         presenter.setCounter(count)
@@ -44,6 +39,12 @@ class DetailsActivity : AppCompatActivity(), ViewDetailsContract {
     private fun setCountText(count: Int) {
         binding.totalCountTextView.text =
             String.format(Locale.getDefault(), getString(R.string.results_count), count)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+        presenter.onDetach()
     }
 
     companion object {

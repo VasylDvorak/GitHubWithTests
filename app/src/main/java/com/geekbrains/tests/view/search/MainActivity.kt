@@ -23,15 +23,14 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     private val binding
         get() = _binding!!
 
-    private val adapter = SearchResultAdapter()
+    val adapter = SearchResultAdapter()
     private val presenter: PresenterSearchContract = SearchPresenter(createRepository())
-    private var totalCount: Int = 0
+    var totalCount: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding= ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setContentView(R.layout.activity_main)
         presenter.onAttach(this)
         setUI()
     }
@@ -42,7 +41,7 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         presenter.onDetach()
     }
 
-    private fun setUI() {
+    fun setUI() {
         binding.toDetailsActivityButton.setOnClickListener {
             startActivity(DetailsActivity.getIntent(this, totalCount))
         }
@@ -50,12 +49,12 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
         setRecyclerView()
     }
 
-    private fun setRecyclerView() {
+    fun setRecyclerView() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.adapter = adapter
     }
 
-    private fun setQueryListener() {
+    fun setQueryListener() {
         binding.searchEditText.setOnEditorActionListener(OnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 val query = binding.searchEditText.text.toString()

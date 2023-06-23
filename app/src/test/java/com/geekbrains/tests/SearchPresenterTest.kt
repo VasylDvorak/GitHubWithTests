@@ -30,7 +30,9 @@ class SearchPresenterTest {
         //Раньше было @RunWith(MockitoJUnitRunner.class) в аннотации к самому классу (SearchPresenterTest)
         MockitoAnnotations.initMocks(this)
         //Создаем Презентер, используя моки Репозитория и Вью, проинициализированные строкой выше
-        presenter = SearchPresenter(viewContract, repository)
+        presenter = SearchPresenter(repository).apply {
+            viewContract = this@SearchPresenterTest.viewContract
+        }
     }
 
     @Test //Проверим вызов метода searchGitHub() у нашего Репозитория
@@ -74,8 +76,7 @@ class SearchPresenterTest {
         presenter.handleGitHubResponse(response)
 
         //Убеждаемся, что вызывается верный метод: viewContract.displayError("Response is null or unsuccessful"), и что он вызывается единожды
-        verify(viewContract, times(1))
-            .displayError("Response is null or unsuccessful")
+        verify(viewContract, times(1)).displayError("Response is null or unsuccessful")
     }
 
     @Test //Проверим порядок вызова методов viewContract
@@ -123,8 +124,7 @@ class SearchPresenterTest {
         presenter.handleGitHubResponse(response)
 
         //Убеждаемся, что вызывается верный метод: viewContract.displayError("Search results or total count are null"), и что он вызывается единожды
-        verify(viewContract, times(1))
-            .displayError("Search results or total count are null")
+        verify(viewContract, times(1)).displayError("Search results or total count are null")
     }
 
     @Test //Пришло время проверить успешный ответ, так как все остальные случаи мы уже покрыли тестами
@@ -148,5 +148,19 @@ class SearchPresenterTest {
 
         //Убеждаемся, что ответ от сервера обрабатывается корректно
         verify(viewContract, times(1)).displaySearchResults(searchResults, 101)
+    }
+
+    @Test
+    fun onAttach() {
+        presenter.viewContract = null
+        presenter.onAttach(viewContract)
+        assertNotNull(presenter.viewContract)
+    }
+
+    @Test
+    fun onDetach() {
+        presenter.viewContract = viewContract
+        presenter.onDetach()
+        assertNull(presenter.viewContract)
     }
 }
