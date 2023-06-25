@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 
 
 @RunWith(AndroidJUnit4::class)
-@SdkSuppress(minSdkVersion = 18)
+@SdkSuppress(minSdkVersion = 21)
 class BehaviorTest {
 
     private val uiDevice: UiDevice = UiDevice.getInstance(getInstrumentation())
