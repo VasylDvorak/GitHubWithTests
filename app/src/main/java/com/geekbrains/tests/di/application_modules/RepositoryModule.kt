@@ -6,7 +6,7 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class GitHubModule {
+class RepositoryModule {
     @Provides
-    fun repository() : RepositoryContract = GitHubRepository()
+   fun bindRepositoryContract(repo: GitHubRepository): RepositoryContract=repo
 }

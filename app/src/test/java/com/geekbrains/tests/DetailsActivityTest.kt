@@ -17,6 +17,7 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.robolectric.annotation.Config
+import org.robolectric.shadows.ShadowToast
 
 @RunWith(AndroidJUnit4::class)
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
@@ -29,6 +30,7 @@ class DetailsActivityTest {
     fun setup() {
         scenario = ActivityScenario.launch(DetailsActivity::class.java)
         context = ApplicationProvider.getApplicationContext()
+
     }
 
     @Test
@@ -46,7 +48,7 @@ class DetailsActivityTest {
     @Test
     fun activityTextView_NotNull() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(totalCountTextView)
             assertNotNull(totalCountTextView)
         }
     }
@@ -54,15 +56,15 @@ class DetailsActivityTest {
     @Test
     fun activityTextView_HasText() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
-            assertEquals("Number of results: 0", totalCountTextView.text)
+            val totalCountTextView = it.findViewById<TextView>(totalCountTextView)
+            assertEquals(numberOfResults+"0", totalCountTextView.text)
         }
     }
 
     @Test
     fun activityTextView_IsVisible() {
         scenario.onActivity {
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(totalCountTextView)
             assertEquals(View.VISIBLE, totalCountTextView.visibility)
         }
     }
@@ -82,10 +84,10 @@ class DetailsActivityTest {
     fun activityButtonIncrement_IsWorking() {
         scenario.onActivity {
             val incrementButton = it.findViewById<Button>(R.id.incrementButton)
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(totalCountTextView)
             incrementButton.performClick()
 
-            assertEquals("Number of results: 1", totalCountTextView.text)
+            assertEquals(numberOfResults+"1", totalCountTextView.text)
         }
     }
 
@@ -93,10 +95,10 @@ class DetailsActivityTest {
     fun activityButtonDecrement_IsWorking() {
         scenario.onActivity {
             val decrementButton = it.findViewById<Button>(R.id.decrementButton)
-            val totalCountTextView = it.findViewById<TextView>(R.id.totalCountTextView)
+            val totalCountTextView = it.findViewById<TextView>(totalCountTextView)
             decrementButton.performClick()
 
-            assertEquals("Number of results: -1", totalCountTextView.text)
+            assertEquals(numberOfResults+"-1", totalCountTextView.text)
         }
     }
 

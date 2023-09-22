@@ -18,13 +18,13 @@ import javax.inject.Inject
 class SearchPresenter internal constructor(
 ) : PresenterSearchContract, RepositoryCallback {
     @Inject
-    lateinit var repository: RepositoryContract
+    lateinit var bindRepositoryContract: RepositoryContract
 
     var viewContract: ViewSearchContract? = null
 
     override fun searchGitHub(searchQuery: String) {
         viewContract?.displayLoading(true)
-        repository.searchGithub(searchQuery, this)
+        bindRepositoryContract.searchGithub(searchQuery, this)
     }
 
     override fun onAttach(viewContract: ViewSearchContract) {
